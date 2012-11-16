@@ -5,7 +5,7 @@ import structures.Vector;
 
 public class CodeGenerator {
 
-    MathOperations mo = new MathOperations();
+    VectorOperations vo = new VectorOperations();
 
     // Generuoja kodo zodzius is generuojancios matricos
     // Paduodama generuojanti matrica ir modulis 'q'
@@ -16,8 +16,8 @@ public class CodeGenerator {
 
         Vector gVector = new Vector(gMatrix.getRowCount());
         for (int i = 0; i < codeSize; i++) {
-            code[i] = mo.multiply(gMatrix, gVector, q);
-            mo.incrementVector(gVector, q);
+            code[i] = vo.multiply(gMatrix, gVector, q);
+            vo.incrementVector(gVector, q);
         }
 
         return code;

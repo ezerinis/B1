@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({CodeGeneratorTest.class, MathOperationsTest.class})
+@Suite.SuiteClasses({CodeGeneratorTest.class, VectorOperationsTest.class})
 public class UtilitiesSuite {
 
     @BeforeClass

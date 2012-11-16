@@ -18,7 +18,7 @@ public class MatrixGenerator {
             for (int j = 0; j < n - k; j++) {
                 row.setC(k + j, rand.nextInt(q));
             }
-            matrix.setVector(i, new Vector(row.getData(), q));
+            matrix.setVector(i, row.clone());
         }
         return matrix;
     }

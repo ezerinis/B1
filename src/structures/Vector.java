@@ -19,8 +19,18 @@ public class Vector {
     }
 
     // Nulinio vektoriaus sukurimas, paduodant vektoriaus ilgi
-    public Vector(int length) throws Exception {
+    public Vector(int length) {
         data = new int[length];
+    }
+
+    // Vektoriaus klonavimas - grazina nauja vektoriu, su tokiomis paciomis koordinatemis
+    @Override
+    public Vector clone() {
+        Vector clonedVector = new Vector(data.length);
+        for (int i = 0; i < data.length; i++) {
+            clonedVector.setC(i, data[i]);
+        }
+        return clonedVector;
     }
 
     public int getC(int c) {

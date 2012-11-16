@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({mac_williams_method.DualCodeMatrixFinderTest.class})
+@Suite.SuiteClasses({mac_williams_method.ControlMatrixFinderTest.class})
 public class Mac_williams_methodSuite {
 
     @BeforeClass

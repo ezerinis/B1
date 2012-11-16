@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import utilities.MathOperations;
 
 public class ParameterDialog extends JDialog {
 
@@ -31,8 +30,6 @@ public class ParameterDialog extends JDialog {
     private String qValue;
     private String nValue;
     private String kValue;
-
-    MathOperations mo = new MathOperations();
 
     public ParameterDialog(JFrame owner, String qInput, String nInput, String kInput) {
         super(owner, "Parametru ivedimas", ModalityType.APPLICATION_MODAL);
@@ -55,7 +52,7 @@ public class ParameterDialog extends JDialog {
                     checkValue(qField.getText(), "q");
                     checkValue(nField.getText(), "n");
                     checkValue(kField.getText(), "k");
-                    if (mo.isPrime(Integer.parseInt(qField.getText()))) {
+                    if (isPrime(Integer.parseInt(qField.getText()))) {
                         qValue = qField.getText();
                         nValue = nField.getText();
                         kValue = kField.getText();
@@ -157,4 +154,17 @@ public class ParameterDialog extends JDialog {
             }
         });
     }
+
+    // Tikrina ar skaicius pirminis
+    private boolean isPrime(int num) {
+        if (num < 2) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if ((num % i) == 0) {
+                return false;
+            }
+        }
+        return true;
+   }
 }
