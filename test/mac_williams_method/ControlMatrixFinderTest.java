@@ -42,19 +42,4 @@ public class ControlMatrixFinderTest {
         assertArrayEquals(new int[]{3,4,0,1,0}, result.getVector(0).getData());
         assertArrayEquals(new int[]{3,2,1,0,1}, result.getVector(1).getData());
     }
-
-//    @Test
-//    public void testFind2() throws Exception {
-//        int q = 3;
-//        Matrix gMatrix = new Matrix(new int[][]{
-//                                     {1,1,2,0},
-//                                     {1,2,1,1}}, q);
-//        ControlMatrixFinder instance = new ControlMatrixFinder();
-//        Matrix result = instance.findControlMatrix(gMatrix, q);
-//        int[] expResult1 = {0,1,1,0};
-//        int[] expResult2 = {0,2,2,0};
-//        assertEquals(2, result.getRowCount());
-//        assertArrayEquals(expResult1, result.getVector(0).getData());
-//        assertArrayEquals(expResult2, result.getVector(1).getData());
-//    }
 }
