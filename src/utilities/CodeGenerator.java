@@ -11,7 +11,7 @@ public class CodeGenerator {
     // Paduodama generuojanti matrica ir modulis 'q'
     // Grazinamas vektoriu, kurie yra visi kodo zodziai, masyvas
     public Vector[] generate(Matrix gMatrix, int q) throws Exception {
-        int codeSize = (int) Math.pow(gMatrix.getRowCount(), q);
+        int codeSize = (int) Math.pow(q, gMatrix.getRowCount());
         Vector[] code = new Vector[codeSize];
 
         Vector gVector = new Vector(gMatrix.getRowCount());

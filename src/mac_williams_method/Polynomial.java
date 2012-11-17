@@ -57,7 +57,7 @@ public class Polynomial {
             for (int j = 0; j < terms.size() - 1; j++) {
                 Term term1 = terms.get(j);
                 Term term2 = terms.get(j + 1);
-                if (term1.pow > term2.pow) {
+                if (term1.getPow() > term2.getPow()) {
                     Term temp = term1;
                     terms.set(j, term2);
                     terms.set(j + 1, temp);
@@ -69,8 +69,8 @@ public class Polynomial {
         List normalizedPoly = new LinkedList<>();
         Term newTerm = terms.get(0);
         for (int i = 1; i < terms.size(); i++) {
-            if (newTerm.pow == terms.get(i).pow) {
-                newTerm.cof += terms.get(i).cof;
+            if (newTerm.getPow() == terms.get(i).getPow()) {
+                newTerm.setCof(newTerm.getCof() + terms.get(i).getCof());
             } else {
                 normalizedPoly.add(newTerm);
                 newTerm = terms.get(i);

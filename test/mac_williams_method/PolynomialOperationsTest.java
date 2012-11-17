@@ -49,43 +49,42 @@ public class PolynomialOperationsTest {
                                                new Term(7, 12)});
         Polynomial result = instance.add(poly1, poly2);
         assertEquals(8, result.size());
-        assertEquals(12, result.getTerm(0).cof);
-        assertEquals(0, result.getTerm(0).pow);
-        assertEquals(-7, result.getTerm(1).cof);
-        assertEquals(1, result.getTerm(1).pow);
-        assertEquals(0, result.getTerm(2).cof);
-        assertEquals(2, result.getTerm(2).pow);
-        assertEquals(-19, result.getTerm(3).cof);
-        assertEquals(4, result.getTerm(3).pow);
-        assertEquals(13, result.getTerm(4).cof);
-        assertEquals(5, result.getTerm(4).pow);
-        assertEquals(4, result.getTerm(5).cof);
-        assertEquals(7, result.getTerm(5).pow);
-        assertEquals(7, result.getTerm(6).cof);
-        assertEquals(12, result.getTerm(6).pow);
-        assertEquals(7, result.getTerm(7).cof);
-        assertEquals(22, result.getTerm(7).pow);
+        assertEquals(12, result.getTerm(0).getCof());
+        assertEquals(0, result.getTerm(0).getPow());
+        assertEquals(-7, result.getTerm(1).getCof());
+        assertEquals(1, result.getTerm(1).getPow());
+        assertEquals(0, result.getTerm(2).getCof());
+        assertEquals(2, result.getTerm(2).getPow());
+        assertEquals(-19, result.getTerm(3).getCof());
+        assertEquals(4, result.getTerm(3).getPow());
+        assertEquals(13, result.getTerm(4).getCof());
+        assertEquals(5, result.getTerm(4).getPow());
+        assertEquals(4, result.getTerm(5).getCof());
+        assertEquals(7, result.getTerm(5).getPow());
+        assertEquals(7, result.getTerm(6).getCof());
+        assertEquals(12, result.getTerm(6).getPow());
+        assertEquals(7, result.getTerm(7).getCof());
+        assertEquals(22, result.getTerm(7).getPow());
     }
 
     @Test
     public void testRaiseToPow() {
-        Term term1 = new Term(2, 3);
-        Term term2 = new Term(-1, 1);
+        Polynomial poly = new Polynomial(new Term[]{new Term(2, 3), new Term(-1, 1)});
         int pow = 5;
-        Polynomial result = instance.raiseToPow(term1, term2, pow);
+        Polynomial result = instance.raiseToPow(poly, pow);
         assertEquals(6, result.size());
-        assertEquals(-1, result.getTerm(0).cof);
-        assertEquals(5, result.getTerm(0).pow);
-        assertEquals(10, result.getTerm(1).cof);
-        assertEquals(7, result.getTerm(1).pow);
-        assertEquals(-40, result.getTerm(2).cof);
-        assertEquals(9, result.getTerm(2).pow);
-        assertEquals(80, result.getTerm(3).cof);
-        assertEquals(11, result.getTerm(3).pow);
-        assertEquals(-80, result.getTerm(4).cof);
-        assertEquals(13, result.getTerm(4).pow);
-        assertEquals(32, result.getTerm(5).cof);
-        assertEquals(15, result.getTerm(5).pow);
+        assertEquals(-1, result.getTerm(0).getCof());
+        assertEquals(5, result.getTerm(0).getPow());
+        assertEquals(10, result.getTerm(1).getCof());
+        assertEquals(7, result.getTerm(1).getPow());
+        assertEquals(-40, result.getTerm(2).getCof());
+        assertEquals(9, result.getTerm(2).getPow());
+        assertEquals(80, result.getTerm(3).getCof());
+        assertEquals(11, result.getTerm(3).getPow());
+        assertEquals(-80, result.getTerm(4).getCof());
+        assertEquals(13, result.getTerm(4).getPow());
+        assertEquals(32, result.getTerm(5).getCof());
+        assertEquals(15, result.getTerm(5).getPow());
     }
 
     @Test
@@ -94,14 +93,14 @@ public class PolynomialOperationsTest {
         Polynomial poly2 = new Polynomial(new Term[]{new Term(3, 2), new Term(1, 3)});
         Polynomial result = instance.mul(poly1, poly2);
         assertEquals(4, result.size());
-        assertEquals(-3, result.getTerm(0).cof);
-        assertEquals(3, result.getTerm(0).pow);
-        assertEquals(-1, result.getTerm(1).cof);
-        assertEquals(4, result.getTerm(1).pow);
-        assertEquals(6, result.getTerm(2).cof);
-        assertEquals(5, result.getTerm(2).pow);
-        assertEquals(2, result.getTerm(3).cof);
-        assertEquals(6, result.getTerm(3).pow);
+        assertEquals(-3, result.getTerm(0).getCof());
+        assertEquals(3, result.getTerm(0).getPow());
+        assertEquals(-1, result.getTerm(1).getCof());
+        assertEquals(4, result.getTerm(1).getPow());
+        assertEquals(6, result.getTerm(2).getCof());
+        assertEquals(5, result.getTerm(2).getPow());
+        assertEquals(2, result.getTerm(3).getCof());
+        assertEquals(6, result.getTerm(3).getPow());
     }
 
     @Test
@@ -110,11 +109,11 @@ public class PolynomialOperationsTest {
         int denominator = 4;
         Polynomial result = instance.div(poly1, 4);
         assertEquals(3, result.size());
-        assertEquals(6, result.getTerm(0).cof);
-        assertEquals(3, result.getTerm(0).pow);
-        assertEquals(-2, result.getTerm(1).cof);
-        assertEquals(1, result.getTerm(1).pow);
-        assertEquals(1, result.getTerm(2).cof);
-        assertEquals(6, result.getTerm(2).pow);
+        assertEquals(6, result.getTerm(0).getCof());
+        assertEquals(3, result.getTerm(0).getPow());
+        assertEquals(-2, result.getTerm(1).getCof());
+        assertEquals(1, result.getTerm(1).getPow());
+        assertEquals(1, result.getTerm(2).getCof());
+        assertEquals(6, result.getTerm(2).getPow());
     }
 }

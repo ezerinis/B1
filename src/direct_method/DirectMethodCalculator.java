@@ -5,13 +5,13 @@ import structures.Vector;
 public class DirectMethodCalculator {
 
     // Apskaiciuoja svoriu skirstini tiesioginio perrinkimo budu
-    // Paduodamas kodas - vektoriu masyvas, grazinamas svoriu skirstinys
+    // Paduodamas tiesinis abeceles kodas - vektoriu masyvas, grazinamas svoriu skirstinys
     public int[] calculateDistribution(Vector[] code) throws Exception {
         if (code.length == 0) {
             throw new Exception("Kodas tuscias");
         }
-        int dimension = code[0].getSize();
-        int[] distribution = new int[dimension + 1];
+        int k = code[0].getSize();
+        int[] distribution = new int[k + 1];
         for (Vector word : code) {
             int weight = calculateWeight(word);
             distribution[weight]++;

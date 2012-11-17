@@ -15,13 +15,15 @@ public class PolynomialOperations {
         return result;
     }
 
-    // Pakelia du termus nurodytu laipsniu
-    // Paduodami du termai ir laipsnis, grazinamas polinomas
-    public Polynomial raiseToPow(Term term1, Term term2, int pow) {
-        Polynomial basePoly = new Polynomial(new Term[]{term1, term2});
-        Polynomial result = basePoly.clone();
+    // Pakelia polinoma nurodytu laipsniu
+    // Paduodamas polinomas ir laipsnis, grazinamas pakeltas laipsniu polinomas
+    public Polynomial raiseToPow(Polynomial input, int pow) {
+        if (pow == 0) {
+            return new Polynomial(new Term[]{new Term(1, 0)});
+        }
+        Polynomial result = input.clone();
         for (int i = 0; i < pow - 1; i++) {
-            result = mul(result, basePoly);
+            result = mul(result, input);
         }
         return result;
     }
@@ -46,6 +48,16 @@ public class PolynomialOperations {
         Polynomial result = new Polynomial();
         for (int i = 0; i < poly.size(); i++) {
             result.add(to.div(poly.getTerm(i), denominator));
+        }
+        return result;
+    }
+
+    // Padaugina polinoma is sveiko skaiciaus
+    // Paduodamas polinomas ir sveikas skaicius, grazinamas padaugintas polinomas
+    public Polynomial mul(Polynomial poly, int multiplier) {
+        Polynomial result = new Polynomial();
+        for (int i = 0; i < poly.size(); i++) {
+            result.add(to.mul(poly.getTerm(i), multiplier));
         }
         return result;
     }
