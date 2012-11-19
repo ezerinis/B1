@@ -41,7 +41,7 @@ public class VectorOperationsTest {
                                         {0,1,1,1},
                                         {1,0,1,0}}, q);
         Vector result = vo.multiply(matrix, vector, q);
-        assertArrayEquals(new int[]{1,0,1,1}, result.getData());
+        assertArrayEquals(new int[]{1,0,1,1}, result.toArray());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class VectorOperationsTest {
                                         {2,1,0,3},
                                         {1,4,2,0}}, q);
         Vector result = vo.multiply(matrix, vector, q);
-        assertArrayEquals(new int[]{2,2,0,1}, result.getData());
+        assertArrayEquals(new int[]{2,2,0,1}, result.toArray());
     }
 
     @Test

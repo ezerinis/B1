@@ -1,29 +1,36 @@
+// Interfeiso klase - cia isdelioti naudotojo grafinio interfeiso elementai
+// Pagrindinis langas
+
 package main;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import utilities.MatrixGenerator;
 
 public class MainFrame extends JFrame {
 
     private JTextField qField = new JTextField("2", 11);
-    private JTextField nField = new JTextField("3", 11);
-    private JTextField kField = new JTextField("3", 11);
+    private JTextField kField = new JTextField("5", 11);
+    private JTextField nField = new JTextField("5", 11);
 
     private ParameterDialog pd = new ParameterDialog(this, qField.getText(),
             nField.getText(), kField.getText());
 
+    private MatrixGenerator mg = new MatrixGenerator();
+
     public MainFrame() {
         JPanel fieldPanel = new JPanel(new BorderLayout());
         fieldPanel.add(createFieldPanel("q: ", qField), BorderLayout.NORTH);
-        fieldPanel.add(createFieldPanel("n: ", nField), BorderLayout.CENTER);
-        fieldPanel.add(createFieldPanel("k: ", kField), BorderLayout.SOUTH);
+        fieldPanel.add(createFieldPanel("k: ", kField), BorderLayout.CENTER);
+        fieldPanel.add(createFieldPanel("n: ", nField), BorderLayout.SOUTH);
 
         JButton changeParButton = new JButton("Pakeisti parametrus");
         changeParButton.addActionListener(new ActionListener() {
@@ -32,8 +39,8 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 pd.showDialog();
                 qField.setText(pd.getQ());
-                nField.setText(pd.getN());
                 kField.setText(pd.getK());
+                nField.setText(pd.getN());
             }
         });
 
@@ -48,6 +55,9 @@ public class MainFrame extends JFrame {
 
         JRadioButton directMode = new JRadioButton("Tiesioginis perrinkimas", true);
         JRadioButton macWilliamsMode = new JRadioButton("MacWilliams tapatybe", false);
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(directMode);
+        buttonGroup.add(macWilliamsMode);
         JButton calculate = new JButton("Skaiciuoti");
 
         JPanel radioPanel = new JPanel(new BorderLayout());
@@ -63,7 +73,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(radioPanel2, BorderLayout.CENTER);
 
         JPanel mainPanel2 = new JPanel(new BorderLayout());
-        mainPanel2.add(mainPanel, BorderLayout.CENTER);
+        mainPanel2.add(mainPanel, BorderLayout.WEST);
 
         setContentPane(mainPanel2);
 

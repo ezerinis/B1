@@ -45,6 +45,15 @@ public class Matrix {
         }
     }
 
+    public int[][] toArray() {
+        int[][] matrix = new int[data.length][data[0].getSize()];
+        for (int k = 0; k < data.length; k++) {
+            Vector row = data[k];
+            matrix[k] = row.toArray();
+        }
+        return matrix;
+    }
+
     public void print() {
         for (int k = 0; k < data.length; k++) {
             Vector row = data[k];

@@ -39,7 +39,7 @@ public class ControlMatrixFinderTest {
         ControlMatrixFinder instance = new ControlMatrixFinder();
         Matrix result = instance.findControlMatrix(gMatrix, q);
         assertEquals(2, result.getRowCount());
-        assertArrayEquals(new int[]{3,4,0,1,0}, result.getVector(0).getData());
-        assertArrayEquals(new int[]{3,2,1,0,1}, result.getVector(1).getData());
+        assertArrayEquals(new int[]{3,4,0,1,0}, result.getVector(0).toArray());
+        assertArrayEquals(new int[]{3,2,1,0,1}, result.getVector(1).toArray());
     }
 }

@@ -34,28 +34,28 @@ public class VectorTest {
     public void data1() throws Exception {
         int[] expResult = {1,2,3};
         Vector instance = new Vector(expResult, 5);
-        assertArrayEquals(expResult, instance.getData());
+        assertArrayEquals(expResult, instance.toArray());
     }
 
     @Test
     public void data2() throws Exception {
         int[] expResult = {0,0,1,2,3};
         Vector instance = new Vector(expResult, 5);
-        assertArrayEquals(expResult, instance.getData());
+        assertArrayEquals(expResult, instance.toArray());
     }
 
     @Test
     public void data3() throws Exception {
         int[] expResult = {0,0,1,2,3,0,0};
         Vector instance = new Vector(expResult, 5);
-        assertArrayEquals(expResult, instance.getData());
+        assertArrayEquals(expResult, instance.toArray());
     }
 
     @Test
     public void data4() throws Exception {
         int[] expResult = {0,0,12,2,3};
         Vector instance = new Vector(expResult, 13);
-        assertArrayEquals(expResult, instance.getData());
+        assertArrayEquals(expResult, instance.toArray());
     }
 
     @Test
@@ -67,14 +67,14 @@ public class VectorTest {
     public void zeroVector()throws Exception {
         Vector instance = new Vector(5);
         int[] expResult = {0,0,0,0,0};
-        assertArrayEquals(expResult, instance.getData());
+        assertArrayEquals(expResult, instance.toArray());
     }
 
     @Test
     public void zeroVector2()throws Exception {
         Vector instance = new Vector(5);
         int[] expResult = {0,0,0,0};
-        assertThat(expResult, IsNot.not(IsEqual.equalTo(instance.getData())));
+        assertThat(expResult, IsNot.not(IsEqual.equalTo(instance.toArray())));
     }
 
     /*

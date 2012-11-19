@@ -39,12 +39,12 @@ public class CodeGeneratorTest {
         CodeGenerator instance = new CodeGenerator();
         Vector[] result = instance.generate(gMatrix, q);
         int[] expResult0 = {0,0,0,0};
-        assertArrayEquals(expResult0, result[0].getData());
+        assertArrayEquals(expResult0, result[0].toArray());
         int[] expResult1 = {1,1,0,0};
-        assertArrayEquals(expResult1, result[1].getData());
+        assertArrayEquals(expResult1, result[1].toArray());
         int[] expResult2 = {0,1,1,1};
-        assertArrayEquals(expResult2, result[2].getData());
+        assertArrayEquals(expResult2, result[2].toArray());
         int[] expResult3 = {1,0,1,1};
-        assertArrayEquals(expResult3, result[3].getData());
+        assertArrayEquals(expResult3, result[3].toArray());
     }
 }

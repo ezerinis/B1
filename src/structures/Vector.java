@@ -45,8 +45,8 @@ public class Vector {
         return data.length;
     }
 
-    public int[] getData() {
-        return data;
+    public int[] toArray() {
+        return data.clone();
     }
 
     /*

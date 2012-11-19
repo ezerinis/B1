@@ -1,3 +1,6 @@
+// Interfeiso klase - cia isdelioti naudotojo grafinio interfeiso elementai
+// Parametru 'k', 'n' ir 'q' ivedimo dialogas
+
 package main;
 
 import java.awt.BorderLayout;
@@ -24,24 +27,24 @@ public class ParameterDialog extends JDialog {
     private int result = -1;
 
     private JTextField qField = new JTextField(3);
-    private JTextField nField = new JTextField(3);
     private JTextField kField = new JTextField(3);
+    private JTextField nField = new JTextField(3);
 
     private String qValue;
-    private String nValue;
     private String kValue;
+    private String nValue;
 
     public ParameterDialog(JFrame owner, String qInput, String nInput, String kInput) {
         super(owner, "Parametru ivedimas", ModalityType.APPLICATION_MODAL);
 
         qValue = qInput;
-        nValue = nInput;
         kValue = kInput;
+        nValue = nInput;
 
         JPanel fieldsPanel = new JPanel(new BorderLayout());
         fieldsPanel.add(createFieldPanel("q: ", qField), BorderLayout.WEST);
-        fieldsPanel.add(createFieldPanel("n: ", nField), BorderLayout.CENTER);
-        fieldsPanel.add(createFieldPanel("k: ", kField), BorderLayout.EAST);
+        fieldsPanel.add(createFieldPanel("k: ", kField), BorderLayout.CENTER);
+        fieldsPanel.add(createFieldPanel("n: ", nField), BorderLayout.EAST);
 
         JButton confirmButton = new JButton("Patvirtinti");
         confirmButton.addActionListener(new ActionListener() {
@@ -50,17 +53,21 @@ public class ParameterDialog extends JDialog {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     checkValue(qField.getText(), "q");
-                    checkValue(nField.getText(), "n");
                     checkValue(kField.getText(), "k");
-                    if (isPrime(Integer.parseInt(qField.getText()))) {
-                        qValue = qField.getText();
-                        nValue = nField.getText();
-                        kValue = kField.getText();
-                        result = OK_OPTION;
-                        setVisible(false);
-                    } else {
+                    checkValue(nField.getText(), "n");
+                    if (!isPrime(Integer.parseInt(qField.getText()))) {
                         JOptionPane.showMessageDialog(ParameterDialog.this, "'q' privalo buti pirminis",
                                 "Klaida", JOptionPane.ERROR_MESSAGE);
+                    } else if (Integer.parseInt(kField.getText()) > Integer.parseInt(nField.getText())) {
+                        JOptionPane.showMessageDialog(ParameterDialog.this, "Eiluciu "
+                                + "skaicius 'k' negali buti daugiau uz stulpeliu skaiciu 'n'",
+                                "Klaida", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        qValue = qField.getText();
+                        kValue = kField.getText();
+                        nValue = nField.getText();
+                        result = OK_OPTION;
+                        setVisible(false);
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(ParameterDialog.this, ex.getMessage(),
@@ -113,8 +120,8 @@ public class ParameterDialog extends JDialog {
 
     public int showDialog() {
         qField.setText(qValue);
-        nField.setText(nValue);
         kField.setText(kValue);
+        nField.setText(nValue);
         setLocationRelativeTo(null);
         setVisible(true);
         return result;
@@ -124,12 +131,12 @@ public class ParameterDialog extends JDialog {
         return qValue;
     }
 
-    public String getN() {
-        return nValue;
-    }
-
     public String getK() {
         return kValue;
+    }
+
+    public String getN() {
+        return nValue;
     }
 
     private JPanel createFieldPanel(String label, JTextField textField) {

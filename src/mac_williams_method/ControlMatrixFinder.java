@@ -2,13 +2,15 @@ package mac_williams_method;
 
 import structures.Matrix;
 import structures.Vector;
+import utilities.MatrixGenerator;
 import utilities.MatrixOperations;
 import utilities.VectorOperations;
 
 public class ControlMatrixFinder {
 
-    MatrixOperations mo = new MatrixOperations();
-    VectorOperations vo = new VectorOperations();
+    private MatrixGenerator mg = new MatrixGenerator();
+    private MatrixOperations mo = new MatrixOperations();
+    private VectorOperations vo = new VectorOperations();
 
     // Suranda kontroline matrica
     // Paduodama generuojanti matrica ir modulis 'q', grazinama kontroline matrica
@@ -31,24 +33,14 @@ public class ControlMatrixFinder {
         tempMatrix = mo.makeNegative(tempMatrix, q);
 
         // Sukuriama standartinio pavidalo vienetine matrica
-        Matrix standardMatrix = createStandardMatrix(gMatrix.getColumnCount() - gMatrix.getRowCount());
+        int sideLength = gMatrix.getColumnCount() - gMatrix.getRowCount();
+        Matrix standardMatrix = mg.generateUnitaryMatrix(sideLength, sideLength);
 
         // Apdorota transponuotoji matrica sujungiama su standartinio pavidalo vienetine matrica
         // Gaunama kontroline matrica
         Matrix controlMatrix = mo.join(tempMatrix, standardMatrix);
 
         return controlMatrix;
-    }
-
-    // Sukuria standartinio pavidalo matrica
-    private Matrix createStandardMatrix(int size) {
-        Matrix standardMatrix = new Matrix(size);
-        for (int i = 0; i < size; i++) {
-            Vector row = new Vector(size);
-            row.setC(i, 1);
-            standardMatrix.setVector(i, row);
-        }
-        return standardMatrix;
     }
 
     // Patikrina ar matrica standartinio pavidalo

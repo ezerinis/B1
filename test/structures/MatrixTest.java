@@ -34,9 +34,9 @@ public class MatrixTest {
                                     {1,2,3,0},
                                     {3,2,3,1},
                                     {4,2,0,4}}, 5);
-        
-        assertArrayEquals(matrix.getVector(0).getData(), new int[]{1,2,3,0});
-        assertArrayEquals(matrix.getVector(1).getData(), new int[]{3,2,3,1});
-        assertArrayEquals(matrix.getVector(2).getData(), new int[]{4,2,0,4});
+
+        assertArrayEquals(matrix.getVector(0).toArray(), new int[]{1,2,3,0});
+        assertArrayEquals(matrix.getVector(1).toArray(), new int[]{3,2,3,1});
+        assertArrayEquals(matrix.getVector(2).toArray(), new int[]{4,2,0,4});
     }
 }
