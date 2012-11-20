@@ -18,6 +18,22 @@ public class Vector {
         }
     }
 
+    // Vektoriaus sukurimas, paduodant simboliu eilute ir moduli 'q'
+    public Vector(String input, int q) throws Exception {
+        if (input == null || input.equals("")) {
+            throw new Exception("Vektorius negali buti tuscias");
+        }
+        String[] coordinates = input.split("\\s+");
+        data = new int[coordinates.length];
+        for (int i = 0; i < coordinates.length; i++) {
+            int coord = Integer.parseInt(coordinates[i].trim());
+            if (coord >= q) {
+                throw new Exception("Vektoriaus koordinate negali buti didesne arba lygi 'q'");
+            }
+            data[i] = coord;
+        }
+    }
+
     // Nulinio vektoriaus sukurimas, paduodant vektoriaus ilgi
     public Vector(int length) {
         data = new int[length];
@@ -49,32 +65,12 @@ public class Vector {
         return data.clone();
     }
 
-    /*
-    // Vektoriaus sukurimas, paduodant eilutine vektoriaus reprezentacija ir moduli 'q'
-    public Vector(String input, int q) throws Exception {
-        if (input == null || input.equals("")) {
-            throw new Exception("Vektorius negali buti tuscias");
+    @Override
+    public String toString() {
+        String result = "";
+        for (int coord : data) {
+            result += coord + " ";
         }
-        if (!isPrime(q)) {
-            throw new Exception("'q' privalo buti pirminis");
-        }
-        int digitCount = String.valueOf(q).length();
-        if (input.length() % digitCount != 0) {
-            throw new Exception("Netinkamas vektoriaus ilgis");
-        }
-        int length = input.length() / digitCount;
-        int number = Integer.parseInt(input);
-        int pos = (int) Math.pow(10, digitCount);
-
-        data = new int[length];
-        for (int i = 0; i < length; i++) {
-            int coord = number % pos;
-            number = number / pos;
-            if (coord >= q) {
-                throw new Exception("Vektoriaus koordinate negali buti didesne arba lygi 'q'");
-            }
-            data[length - i - 1] = coord;
-        }
+        return result;
     }
-    */
 }

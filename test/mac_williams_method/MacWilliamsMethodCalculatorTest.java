@@ -39,4 +39,16 @@ public class MacWilliamsMethodCalculatorTest {
         int[] result = instance.calculateDistribution(dualDistribution, codeSize, n, q);
         assertArrayEquals(expResult, result);
     }
+
+    @Test
+    public void testCalculateDistribution2() {
+        int[] dualDistribution = new int[]{1,0,1,0};
+        int codeSize = 4;
+        int n = 3;
+        int q = 2;
+        MacWilliamsMethodCalculator instance = new MacWilliamsMethodCalculator();
+        int[] expResult = new int[]{1,1,1,1};
+        int[] result = instance.calculateDistribution(dualDistribution, codeSize, n, q);
+        assertArrayEquals(expResult, result);
+    }
 }

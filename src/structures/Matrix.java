@@ -20,6 +20,29 @@ public class Matrix {
         }
     }
 
+    // Matricos sukurimas, paduodant simboliu eilute ir moduli 'q'
+    public Matrix(String input, int q) throws Exception {
+        if (input == null || input.equals("")) {
+            throw new Exception("Matrica negali buti tuscia");
+        }
+        String[] rows = input.split("\n");
+        Vector[] temp = new Vector[rows.length];
+        int count = 0;
+        for (String row : rows) {
+            if (!row.trim().equals("")) {
+                temp[count++] = new Vector(row, q);
+            }
+        }
+        int size = temp[0].getSize();
+        for (int i = 0; i < count; i++) {
+            if (temp[i].getSize() != size) {
+                throw new Exception("Matricos eiluciu ilgiai nesutampa");
+            }
+        }
+        data = new Vector[count];
+        System.arraycopy(temp, 0, data, 0, count);
+    }
+
     // Tuscios matricos sukurimas, paduodant tik eiluciu skaiciu
     public Matrix(int rowCount) {
         data = new Vector[rowCount];
@@ -52,6 +75,16 @@ public class Matrix {
             matrix[k] = row.toArray();
         }
         return matrix;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        for (int k = 0; k < data.length; k++) {
+            result += data[k].toString() + "\n";
+
+        }
+        return result;
     }
 
     public void print() {

@@ -19,7 +19,7 @@ public class ControlMatrixFinder {
             throw new Exception("Pateikta generuojanti matrica yra nestandartinio pavidalo");
         }
         if (gMatrix.getRowCount() == gMatrix.getColumnCount()) {
-            return null;
+            throw new Exception("Pateikta generuojanti matrica yra kvadratine, todel negalima rasti jos kontrolines matricos");
         }
 
         // Nuo generuojancios matricos atskiriama kaireje jos puseje esanti standartinio pavidalo vienetine matrica
