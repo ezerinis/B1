@@ -8,9 +8,15 @@ public class MacWilliamsMethodCalculator {
     private PolynomialOperations po = new PolynomialOperations();
 
     // Apskaiciuoja svoriu skirstini panaudojant McWilliams tapatybe
-    // Paduodamas dualaus kodo zodziu svoriu skirstinys, kodo, kurio svoriu skirstinys ieskomas, dydis, ilgis ir modulis 'q'
+    // Paduodamas dualaus kodo zodziu svoriu skirstinys, dualaus kodo vektoriaus ilgis ir modulis 'q'
     // Grazinamas kodo zodziu svoriu skirstinys
-    public int[] calculateDistribution(int[] dualWeightDistribution, int codeSize, int n, int q) {
+    public int[] calculateDistribution(int[] dualWeightDistribution, int n, int q) {
+
+        // Susumuojant dualaus kodo skirstini, apskaiciuojamas dualaus kodo dydis
+        int codeSize = 0;
+        for (int weight : dualWeightDistribution) {
+            codeSize += weight;
+        }
 
         // x + (q - 1) * y
         Polynomial poly1 = new Polynomial(new Term[]{new Term(X, 0), new Term(q - 1, 1)});

@@ -36,6 +36,16 @@ public class VectorOperations {
         return result;
     }
 
+    // Prie kiekvienos vektoriaus koordinates prideda sveika skaiciu moduliu 'q', grazina vektoriu
+    public Vector add(int num, Vector initialVector, int q) throws Exception {
+        Vector result = new Vector(initialVector.getSize());
+        for (int i = 0; i < initialVector.getSize(); i++) {
+            int value = (num + initialVector.getC(i)) % q;
+            result.setC(i, value);
+        }
+        return result;
+    }
+
     // Sudeda du vektorius moduliu 'q', grazina vektoriu
     public Vector add(Vector vector1, Vector vector2, int q) throws Exception {
         if (vector1.getSize() != vector2.getSize()) {

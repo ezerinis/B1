@@ -68,13 +68,22 @@ public class Matrix {
         }
     }
 
+    @Override
+    public Matrix clone() {
+        Matrix clonedMatrix = new Matrix(data.length);
+        for (int i = 0; i < data.length; i++) {
+            clonedMatrix.setVector(i, data[i].clone());
+        }
+        return clonedMatrix;
+    }
+
     public int[][] toArray() {
-        int[][] matrix = new int[data.length][data[0].getSize()];
+        int[][] array = new int[data.length][data[0].getSize()];
         for (int k = 0; k < data.length; k++) {
             Vector row = data[k];
-            matrix[k] = row.toArray();
+            array[k] = row.toArray();
         }
-        return matrix;
+        return array;
     }
 
     @Override

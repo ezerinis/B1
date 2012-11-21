@@ -1,7 +1,6 @@
 // Interfeiso klase - cia isdelioti naudotojo grafinio interfeiso elementai
 package main;
 
-import direct_method.DirectMethodCalculator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -11,16 +10,12 @@ import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import mac_williams_method.ControlMatrixFinder;
-import mac_williams_method.MacWilliamsMethodCalculator;
 import structures.Matrix;
-import structures.Vector;
-import utilities.CodeGenerator;
 import utilities.MatrixGenerator;
 
 public class MainFrame extends JFrame {
 
-    private static final int MAX = 2147483647;
+    private DistributionFinder df;
 
     public MainFrame() {
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -31,6 +26,7 @@ public class MainFrame extends JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -73,65 +69,42 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    int qValue = Integer.parseInt(jTextField1.getText());
-                    String text = jTextArea1.getText();
-                    checkInput(qValue, text);
-
-                    DirectMethodCalculator dmc = new DirectMethodCalculator();
-                    Matrix gMatrix = new Matrix(text, qValue);
-                    CodeGenerator cg = new CodeGenerator();
-                    Vector[] code = cg.generate(gMatrix, qValue);
-                    System.out.println("Kodo zodziai:");
-                    printCode(code);
-                    int[] distribution = null;
-                    if (jRadioButton1.isSelected()) {
-                        distribution = dmc.calculateDistribution(code);
-                    } else if (jRadioButton2.isSelected()) {
-                        ControlMatrixFinder cmf = new ControlMatrixFinder();
-                        Matrix controlMatrix = cmf.findControlMatrix(gMatrix, qValue);
-                        System.out.println("Kontroline matrica:");
-                        System.out.println(controlMatrix + "\n");
-                        Vector[] dualCode = cg.generate(controlMatrix, qValue);
-                        System.out.println("Dualaus kodo zodziai:");
-                        printCode(dualCode);
-                        int[] dualWeightDistribution = dmc.calculateDistribution(dualCode);
-                        MacWilliamsMethodCalculator wmc = new MacWilliamsMethodCalculator();
-                        distribution = wmc.calculateDistribution(dualWeightDistribution,
-                                code.length, code[0].getSize(), qValue);
+                    if (df != null && !df.isDone()) {
+                        throw new Exception("Vyksta skaiciavimas");
                     }
-                    System.out.println("==========================");
-                    jTextArea2.setText(toString(distribution));
+                    String inputMatrix = jTextArea1.getText();
+                    checkInput(inputMatrix);
+                    int qValue = Integer.parseInt(jTextField1.getText());
+                    df = new DistributionFinder(inputMatrix, qValue, jRadioButton1, jTextArea2);
+                    df.execute();
+                    jTextArea2.setText("Vyksta\nskaiciavimas...");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(MainFrame.this, ex.getMessage(),
                             "Klaida", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
-            private String toString(int[] distribution) {
-                String result = "";
-                int i = 0;
-                for (int count : distribution) {
-                    result += "A" + i++ + " = " + count + "\n";
-                }
-                return result;
-            }
-
-            private void printCode(Vector[] code) {
-                for (Vector v : code) {
-                    System.out.println(v.toString());
-                }
-                System.out.println("\n");
-            }
-
-            private void checkInput(int qValue, String text) throws Exception {
+            private void checkInput(String inputMatrix) throws Exception {
                 checkValue(jTextField1.getText(), "q");
-                if (!isPrime(qValue)) {
+                if (!isPrime(Integer.parseInt(jTextField1.getText()))) {
                     throw new Exception("'q' privalo buti pirminis");
                 }
                 Pattern pattern = Pattern.compile("[^\\d\\s]");
-                Matcher matcher = pattern.matcher(text);
+                Matcher matcher = pattern.matcher(inputMatrix);
                 if (matcher.find()) {
                     throw new Exception("Matricos ivedimo lauke gali buti tik skaiciai ir tarpai");
+                }
+            }
+        });
+
+        jButton3.setText("Atsaukti");
+        jButton3.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (df != null && !df.isDone()) {
+                    df.cancel(true);
+                    jTextArea2.setText("Skaiciavimas\natsauktas");
                 }
             }
         });
@@ -146,19 +119,24 @@ public class MainFrame extends JFrame {
                     .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jButton3)))
                     .addComponent(jButton1))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -183,7 +161,6 @@ public class MainFrame extends JFrame {
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jTextArea2.setText("Rezultatu\nlaukas");
-        jTextArea2.setFocusable(false);
         jScrollPane2.setViewportView(jTextArea2);
 
         jLabel2.setText("k:");
@@ -367,19 +344,18 @@ public class MainFrame extends JFrame {
         try {
             intValue = Integer.parseInt(value);
         } catch (Exception ex) {
-            throw new Exception("'" + field + "' negali virsyti " + MAX);
+            throw new Exception("'" + field + "' virsija maksimalia reiksme");
         }
 
         if (intValue == 0) {
             throw new Exception("'" + field + "' negali buti lygus 0");
-        } else if (intValue > MAX) {
-            throw new Exception("'" + field + "' negali virsyti " + MAX);
         }
     }
 
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

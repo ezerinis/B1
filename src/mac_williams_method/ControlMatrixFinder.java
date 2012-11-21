@@ -69,4 +69,27 @@ public class ControlMatrixFinder {
         }
         return true;
     }
+
+    private Matrix findStandardMatrix(Matrix gMatrix, int q) throws Exception {
+        Matrix standardMatrix = gMatrix.clone();
+        int rowCount = standardMatrix.getRowCount();
+        for (int k = 0; k < rowCount;) {
+            Vector row = standardMatrix.getVector(k);
+            if (row.getC(k) != 0) {
+                row = vo.add(q - row.getC(k) + 1, row, q);
+                for (int i = 0; i < standardMatrix.getRowCount(); i++) {
+                    if (i == k) {
+                        continue;
+                    }
+                    int multiplier = q - standardMatrix.getVector(i).getC(k);
+                    Vector multipliedRow = vo.multiply(multiplier, row, q);
+                    Vector tempRow = vo.add(standardMatrix.getVector(i), multipliedRow, q);
+                    standardMatrix.setVector(i, tempRow);
+                }
+            } else {
+                
+            }
+        }
+        return standardMatrix;
+    }
 }
