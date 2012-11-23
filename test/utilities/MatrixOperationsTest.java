@@ -46,12 +46,12 @@ public class MatrixOperationsTest {
     @Test
     public void testTranspose() throws Exception {
         Matrix inputMatrix = new Matrix(new int[][]{
-                                             {2,2},
-                                             {1,3},
-                                             {0,4}}, 5);
+                                             {2,2,4},
+                                             {1,3,1}}, 5);
         Matrix result = mo.transpose(inputMatrix);
-        assertArrayEquals(new int[]{2,1,0}, result.getVector(0).toArray());
-        assertArrayEquals(new int[]{2,3,4}, result.getVector(1).toArray());
+        assertArrayEquals(new int[]{2,1}, result.getVector(0).toArray());
+        assertArrayEquals(new int[]{2,3}, result.getVector(1).toArray());
+        assertArrayEquals(new int[]{4,1}, result.getVector(2).toArray());
     }
 
     @Test
@@ -71,12 +71,12 @@ public class MatrixOperationsTest {
                                          {3,1,2,0,4},
                                          {4,1,4,2,4}}, 5);
         Matrix matrix2 = new Matrix(new int[][]{
-                                         {3,4},
-                                         {2,0},
-                                         {0,4}}, 5);
+                                         {3,4,0},
+                                         {2,0,4},
+                                         {0,4,2}}, 5);
         Matrix result = mo.join(matrix1, matrix2);
-        assertArrayEquals(new int[]{4,3,1,4,3,3,4}, result.getVector(0).toArray());
-        assertArrayEquals(new int[]{3,1,2,0,4,2,0}, result.getVector(1).toArray());
-        assertArrayEquals(new int[]{4,1,4,2,4,0,4}, result.getVector(2).toArray());
+        assertArrayEquals(new int[]{4,3,1,4,3,3,4,0}, result.getVector(0).toArray());
+        assertArrayEquals(new int[]{3,1,2,0,4,2,0,4}, result.getVector(1).toArray());
+        assertArrayEquals(new int[]{4,1,4,2,4,0,4,2}, result.getVector(2).toArray());
     }
 }

@@ -10,6 +10,9 @@ public class Matrix {
         if (input == null || input.length == 0) {
             throw new Exception("Matrica negali buti tuscia");
         }
+        if (input.length > input[0].length) {
+            throw new Exception("Matricos eiluciu skaicius 'k' negali buti didesnis uz stulpeliu skaiciu 'n'");
+        }
         data = new Vector[input.length];
         int columnCount = input[0].length;
         for (int i = 0; i < input.length; i++) {
@@ -38,6 +41,9 @@ public class Matrix {
             if (temp[i].getSize() != size) {
                 throw new Exception("Matricos eiluciu ilgiai nesutampa");
             }
+        }
+        if (temp.length > temp[0].getSize()) {
+            throw new Exception("Matricos eiluciu skaicius 'k' negali buti didesnis uz stulpeliu skaiciu 'n'");
         }
         data = new Vector[count];
         System.arraycopy(temp, 0, data, 0, count);
@@ -103,6 +109,16 @@ public class Matrix {
                 System.out.print(row.getC(n));
             }
             System.out.println();
+        }
+    }
+
+    // Perstata - perstato matricos stulpelius
+    // Paduodami stulpeliu numeriai, matricos, kuriai iskviecima si funkcija, stulpeliai perstatomi
+    public void rearrange(int i, int j) {
+        for (Vector vector : data) {
+            int temp = vector.getC(i);
+            vector.setC(i, vector.getC(j));
+            vector.setC(j, temp);
         }
     }
 }

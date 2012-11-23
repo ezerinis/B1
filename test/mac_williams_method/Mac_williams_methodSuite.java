@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({mac_williams_method.ControlMatrixFinderTest.class, MacWilliamsMethodCalculatorTest.class, PolynomialOperationsTest.class, PolynomialTest.class})
+@Suite.SuiteClasses({mac_williams_method.MatrixFinderTest.class, MacWilliamsMethodCalculatorTest.class, PolynomialOperationsTest.class, PolynomialTest.class})
 public class Mac_williams_methodSuite {
 
     @BeforeClass

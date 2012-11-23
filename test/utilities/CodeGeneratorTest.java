@@ -36,8 +36,9 @@ public class CodeGeneratorTest {
         Matrix gMatrix = new Matrix(new int[][]{
                                      {1,1,0,0},
                                      {0,1,1,1}}, q);
-        CodeGenerator instance = new CodeGenerator();
-        Vector[] result = instance.generate(gMatrix, q);
+        CodeGenerator instance = new CodeGenerator(gMatrix, q);
+        instance.execute();
+        Vector[] result = instance.get();
         int[] expResult0 = {0,0,0,0};
         assertArrayEquals(expResult0, result[0].toArray());
         int[] expResult1 = {1,1,0,0};

@@ -6,8 +6,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
-import mac_williams_method.ControlMatrixFinder;
 import mac_williams_method.MacWilliamsMethodCalculator;
+import mac_williams_method.MatrixFinder;
 import structures.Matrix;
 import structures.Vector;
 import utilities.CodeGenerator;
@@ -16,7 +16,7 @@ public class DistributionFinder extends SwingWorker<int[], Void> {
 
     private CodeGenerator cg;
     private DirectMethodCalculator dmc = new DirectMethodCalculator();
-    private ControlMatrixFinder cmf = new ControlMatrixFinder();
+    private MatrixFinder cmf = new MatrixFinder();
     private MacWilliamsMethodCalculator wmc = new MacWilliamsMethodCalculator();
 
     private String inputMatrix;
@@ -46,9 +46,10 @@ public class DistributionFinder extends SwingWorker<int[], Void> {
                 distribution = wmc.calculateDistribution(dualWeightDistribution,
                         dualCode[0].getSize(), qValue);
             }
-        } catch (OutOfMemoryError out) {
+        } catch (ExecutionException out) {
             JOptionPane.showMessageDialog(null, "Per mazai atminties. Sumazinkite matricos dydi arba 'q'",
                     "Klaida", JOptionPane.ERROR_MESSAGE);
+            textArea.setText("Skaiciavimas\nnutrauktas");
         }
         return distribution;
     }
@@ -62,6 +63,7 @@ public class DistributionFinder extends SwingWorker<int[], Void> {
             textArea.setText(toString(get()));
         } catch (InterruptedException | ExecutionException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Klaida", JOptionPane.ERROR_MESSAGE);
+            textArea.setText("Skaiciavimas\nnutrauktas");
         } catch (Exception ex) {
         }
     }
