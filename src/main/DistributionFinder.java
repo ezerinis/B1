@@ -15,7 +15,7 @@ import structures.Matrix;
 import structures.Vector;
 import utilities.CodeGenerator;
 
-public class DistributionFinder extends SwingWorker<int[], Void> {
+public class DistributionFinder extends SwingWorker<long[], Void> {
 
     private CodeGenerator cg;
     private DirectMethodCalculator dmc = new DirectMethodCalculator();
@@ -39,11 +39,11 @@ public class DistributionFinder extends SwingWorker<int[], Void> {
     // Pagrindine funkcija, kuri vykdo svoriu skirstinio paieska
     // Paduodamu parametru nera, grazinamas svoriu skirstinio masyvas
     @Override
-    protected int[] doInBackground() throws Exception {
+    protected long[] doInBackground() throws Exception {
         // Pagal matricos simboliu eilutes reprezentacija, sukuriamas matricos objektas
         Matrix gMatrix = new Matrix(inputMatrix, qValue);
 
-        int[] distribution = null;
+        long[] distribution = null;
         try {
             // Tikrinama koks skaiciavimo budas pasirinktas
             if (button.isSelected()) {
@@ -59,7 +59,7 @@ public class DistributionFinder extends SwingWorker<int[], Void> {
                 // Pagal kontroline matrica generuojamas kodas
                 Vector[] dualCode = generateCode(controlMatrix);
                 // Apskaiciuojamas dualaus kodo zodziu svoriu skirstinys
-                int[] dualWeightDistribution = dmc.calculateDistribution(dualCode);
+                long[] dualWeightDistribution = dmc.calculateDistribution(dualCode);
                 // Apskaiciuojamas ivestos generuojancios matricos kodo zodziu svoriu skirstinys
                 distribution = wmc.calculateDistribution(dualWeightDistribution,
                         dualCode[0].getSize(), qValue);
@@ -90,10 +90,10 @@ public class DistributionFinder extends SwingWorker<int[], Void> {
 
     // Is kodo zodziu svoriu skirstinio, kuris laikomas sveiku skaiciu masyve, suformuoja simboliu eilute, skirta isvedimui i rezultatu lauka
     // Paduodamas svriu skirstinys, grazinama skirstinio simboliu eilute
-    private String toString(int[] distribution) throws Exception {
+    private String toString(long[] distribution) throws Exception {
         String result = "";
         int i = 0;
-        for (int count : distribution) {
+        for (long count : distribution) {
             result += "A" + i++ + " = " + count + "\n";
         }
         return result;

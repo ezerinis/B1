@@ -39,8 +39,8 @@ public class DirectMethodCalculatorTest {
             new Vector(new int[]{1,1,1,1,1},2)
         };
         DirectMethodCalculator instance = new DirectMethodCalculator();
-        int[] expResult = new int[]{1,0,1,2,0,1};
-        int[] result = instance.calculateDistribution(code);
+        long[] expResult = new long[]{1,0,1,2,0,1};
+        long[] result = instance.calculateDistribution(code);
         assertArrayEquals(expResult, result);
     }
 }

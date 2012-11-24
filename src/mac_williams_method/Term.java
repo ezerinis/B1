@@ -2,11 +2,11 @@ package mac_williams_method;
 
 public class Term {
 
-    private int cof;
+    private long cof;
     private int pow;
 
     // Termo sukurimas, paduodant jo koeficienta ir laipsni
-    public Term(int cof, int pow) {
+    public Term(long cof, int pow) {
         this.cof = cof;
         this.pow = pow;
     }
@@ -18,7 +18,7 @@ public class Term {
     }
 
     // Grazinamas termo koeficientas
-    public int getCof() {
+    public long getCof() {
         return cof;
     }
 
@@ -28,7 +28,7 @@ public class Term {
     }
 
     // Termo koeficientas pakeiciamas i nauja, kuris paduodamas kaip parametras
-    public void setCof(int cof) {
+    public void setCof(long cof) {
         this.cof = cof;
     }
 

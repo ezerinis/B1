@@ -30,23 +30,23 @@ public class MacWilliamsMethodCalculatorTest {
 
     @Test
     public void testCalculateDistribution() {
-        int[] dualDistribution = new int[]{1,0,1,1,0,1};
+        long[] dualDistribution = new long[]{1,0,1,1,0,1};
         int n = 5;
         int q = 2;
         MacWilliamsMethodCalculator instance = new MacWilliamsMethodCalculator();
-        int[] expResult = new int[]{1,0,4,0,3,0};
-        int[] result = instance.calculateDistribution(dualDistribution, n, q);
+        long[] expResult = new long[]{1,0,4,0,3,0};
+        long[] result = instance.calculateDistribution(dualDistribution, n, q);
         assertArrayEquals(expResult, result);
     }
 
     @Test
     public void testCalculateDistribution2() {
-        int[] dualDistribution = new int[]{1,0,1,0};
+        long[] dualDistribution = new long[]{1,0,1,0};
         int n = 3;
         int q = 2;
         MacWilliamsMethodCalculator instance = new MacWilliamsMethodCalculator();
-        int[] expResult = new int[]{1,1,1,1};
-        int[] result = instance.calculateDistribution(dualDistribution, n, q);
+        long[] expResult = new long[]{1,1,1,1};
+        long[] result = instance.calculateDistribution(dualDistribution, n, q);
         assertArrayEquals(expResult, result);
     }
 }

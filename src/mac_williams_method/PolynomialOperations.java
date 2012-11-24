@@ -54,7 +54,7 @@ public class PolynomialOperations {
 
     // Padaugina polinoma is sveiko skaiciaus
     // Paduodamas polinomas ir sveikas skaicius, grazinamas padaugintas polinomas
-    public Polynomial mul(Polynomial poly, int multiplier) {
+    public Polynomial mul(Polynomial poly, long multiplier) {
         Polynomial result = new Polynomial();
         for (int i = 0; i < poly.size(); i++) {
             result.add(to.mul(poly.getTerm(i), multiplier));

@@ -16,7 +16,7 @@ public class TermOperations {
     // Sudauginami du termai
     // Paduodami du termai, grazinamas vienas termas, kuris yra ju sandauga
     public Term mul(Term term1, Term term2) {
-        int cof = term1.getCof() * term2.getCof();
+        long cof = term1.getCof() * term2.getCof();
         int pow = term1.getPow() + term2.getPow();
         return new Term(cof, pow);
     }
@@ -30,7 +30,7 @@ public class TermOperations {
 
     // Padaugina terma is sveiko skaiciaus
     // Paduodamas termas ir sveikas skaicius, grazinamas padaugintas termas
-    public Term mul(Term term, int multiplier) {
+    public Term mul(Term term, long multiplier) {
         Term result = new Term(term.getCof() * multiplier, term.getPow());
         return result;
     }

@@ -12,11 +12,11 @@ public class MacWilliamsMethodCalculator {
     // Apskaiciuoja svoriu skirstini panaudojant McWilliams tapatybe
     // Paduodamas dualaus kodo zodziu svoriu skirstinys, dualaus kodo vektoriaus ilgis ir modulis 'q'
     // Grazinamas kodo zodziu svoriu skirstinys
-    public int[] calculateDistribution(int[] dualWeightDistribution, int n, int q) {
+    public long[] calculateDistribution(long[] dualWeightDistribution, int n, int q) {
 
         // Susumuojant dualaus kodo skirstini, apskaiciuojamas dualaus kodo dydis
         int codeSize = 0;
-        for (int weight : dualWeightDistribution) {
+        for (long weight : dualWeightDistribution) {
             codeSize += weight;
         }
 
@@ -45,7 +45,7 @@ public class MacWilliamsMethodCalculator {
 
         // Koeficientai, esantys prie gauto polinomo termu, yra kodo zodziu svoriu skirstinys
         // Jie atrenkami ir sudedami i masyva
-        int[] distribution = new int[n + 1];
+        long[] distribution = new long[n + 1];
         for (int i = 0; i < finalPoly.size(); i++) {
             Term term = finalPoly.getTerm(i);
             distribution[term.getPow()] = term.getCof();
