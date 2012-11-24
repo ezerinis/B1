@@ -15,13 +15,11 @@ public class MatrixFinder {
     // Suranda kontroline matrica
     // Paduodama generuojanti matrica ir modulis 'q', grazinama kontroline matrica
     public Matrix findControlMatrix(Matrix gMatrix, int q) throws Exception {
-//        if (!checkIfStandardForm(gMatrix)) {
-//            throw new Exception("Pateikta generuojanti matrica yra nestandartinio pavidalo");
-//        }
         if (gMatrix.getRowCount() == gMatrix.getColumnCount()) {
             throw new Exception("Pateikta generuojanti matrica yra kvadratine, todel negalima rasti jos kontrolines matricos");
         }
 
+        // Randama standartine paduotos matricos forma
         Matrix standardMatrix = findStandardMatrix(gMatrix, q);
 
         // Nuo generuojancios matricos atskiriama kaireje jos puseje esanti standartinio pavidalo vienetine matrica
@@ -45,77 +43,67 @@ public class MatrixFinder {
         return controlMatrix;
     }
 
-    // Patikrina ar matrica standartinio pavidalo
-    // Paduodama matrica, gazinama logine reiksme 'true' arba 'false'
-    private boolean checkIfStandardForm(Matrix matrix) {
-        int columnCount = matrix.getColumnCount();
-        int rowCount = matrix.getRowCount();
-        if (columnCount < rowCount) {
-            return false;
-        }
-        for (int k = 0; k < rowCount; k++) {
-            Vector row = matrix.getVector(k);
-            for (int n = 0; n < k; n++) {
-                if (row.getC(n) != 0) {
-                    return false;
-                }
-            }
-            for (int n = k + 1; n < rowCount; n++) {
-                if (row.getC(n) != 0) {
-                    return false;
-                }
-            }
-            if (row.getC(k) != 1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     // Suveda matrica i standartine jos forma
-    // paduodama matrica ir modulis 'q', grazinama standartine matrica
+    // Paduodama matrica ir modulis 'q', grazinama standartine matrica
     public Matrix findStandardMatrix(Matrix gMatrix, int q) throws Exception {
         Matrix standardMatrix = gMatrix.clone();
         int rowCount = standardMatrix.getRowCount();
+
+        // Pereinama kiekviena eilute
         for (int k = 0; k < rowCount;) {
             Vector row = standardMatrix.getVector(k);
+            // Jei eilutes reiksme, esanti k-oje eilutes pozicijoje nelygi 0, visa eilute padauginama is tokio skaiciaus, kad ta reiksme taptu lygi 1
             if (row.getC(k) != 0) {
+                // Randama atvirkstine reiksme, is kurios padauginus skaiciu jis tampa lygus 1
                 int inverse = findInverse(row.getC(k), q);
+                // Eilute padauginama is rastos reiksmes
                 row = vo.multiply(inverse, row, q);
                 standardMatrix.setVector(k, row);
+
+                // Prie kiekvienos matricos eilutes pridedama k-oji eilute, padauginta is tam tikro skaiciaus
                 for (int i = 0; i < rowCount; i++) {
                     if (i == k) {
                         continue;
                     }
+
+                    // Randamas skaicius, is kurio reikia padauginti k-aja eilute, kad ja pridejus prie i-osios eilutes i-osios eilutes k-oji reiksme taptu lygi 0
                     int multiplier = q - standardMatrix.getVector(i).getC(k);
+                    // k-oji eilute padauginama is rasto skaiciaus
                     Vector multipliedRow = vo.multiply(multiplier, row, q);
+                    // Padauginta eilute sudedama su i-aja eilute, i-osios eilutes k-oji reiksme tampa lygi 0
                     Vector tempRow = vo.add(standardMatrix.getVector(i), multipliedRow, q);
                     standardMatrix.setVector(i, tempRow.clone());
                 }
                 k++;
+
+            // Jei k-osios eilutes k-oji reiksme lygi nuliui, reikia perstatyti eilutes arba stulpelius taip, kad toje pozicijoje esanti reiksme nebutu lygi 0
             } else {
                 boolean found = false;
                 int i = k + 1;
                 while (!found && i < rowCount) {
+                    // Jeigu randama tokia eilute, kurios k-ojoje pozicijoje esanti reiksme nelygi 0, ji sukeiciama su k-aja eilute
                     if (standardMatrix.getVector(i).getC(k) != 0) {
                         Vector temp = standardMatrix.getVector(i);
                         standardMatrix.setVector(i, row.clone());
                         standardMatrix.setVector(k, temp);
                         found = true;
-
                     } else {
                         i++;
                     }
                 }
+
+                // Jeigu nebuvo rasta tinkama eilute, ieskoma tinkamo stulpelio, su kuriuo butu galima sukeisti k-aji stulpeli
                 i = k + 1;
                 while (!found && i < standardMatrix.getColumnCount()) {
                     if (standardMatrix.getVector(k).getC(i) != 0) {
+                        // Jei randamas toks stulpelis, kurio k-oje eiluteje esanti reiksme nelygi 0, ivykdoma perstata su k-uoju stulpeliu
                         standardMatrix.rearrange(k, i);
                         found = true;
                     } else {
                         i++;
                     }
                 }
+                // Jeigu nebuvo rasta nei tinkama eilute, nei tinkamas stulpelis su kuriais butu buve galima sukeisti, metama klaida, kad negalima rasti matricos standartines formos
                 if (!found) {
                     throw new Exception("Matrica neturi standartines formos");
                 }

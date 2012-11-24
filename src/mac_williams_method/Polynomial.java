@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Polynomial {
 
+    // Polinomo termai laikomi termu sarase
     private List<Term> terms = new LinkedList<>();
 
     // Tuscio polinomo sukurimas

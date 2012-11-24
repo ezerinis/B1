@@ -40,7 +40,7 @@ public class MatrixOperations {
     }
 
     // Apskaiciuoja neigiamas matricos reiksmes moduliu 'q'
-    // Paduodama matrica su moduliu 'q', grazinama matrica
+    // Paduodama matrica su moduliu 'q', grazinama apdorota matrica
     public Matrix makeNegative(Matrix inputMatrix, int q) {
         int rowCount = inputMatrix.getRowCount();
         Matrix result = new Matrix(rowCount);

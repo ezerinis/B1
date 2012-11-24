@@ -2,6 +2,7 @@ package structures;
 
 public class Vector {
 
+    // Visa informacija laikoma sveiku skaiciu masyve
     private int[] data;
 
     // Vektoriaus sukurimas, paduodant masyva su vektoriaus koordinatemis ir moduli 'q'
@@ -49,22 +50,27 @@ public class Vector {
         return clonedVector;
     }
 
+    // Grazina vektoriaus koordinate pagal nurodyta koordinates numeri
     public int getC(int c) {
         return data[c];
     }
 
+    // I nurodyta pozicija iraso nauja vektoriaus koordinates reiksme
     public void setC(int c, int value) {
         data[c] = value;
     }
 
+    // Grazina vektoriaus ilgi
     public int getSize() {
         return data.length;
     }
 
+    // Grazina masyva su vektoriaus koordinatemis
     public int[] toArray() {
         return data.clone();
     }
 
+    // Grazina vektoriaus simboliu eilutes (String) reprezentacija
     @Override
     public String toString() {
         String result = "";

@@ -1,4 +1,5 @@
-// Interfeiso klase - cia isdelioti naudotojo grafinio interfeiso elementai
+// GUI (grafinio vartotojo interfeiso) klase - cia isdelioti GUI elementai
+
 package main;
 
 import java.awt.event.ActionEvent;
@@ -16,7 +17,9 @@ import utilities.MatrixGenerator;
 public class MainFrame extends JFrame {
 
     private DistributionFinder df;
+    private MatrixGenerator mg = new MatrixGenerator();
 
+    // Pagrindinio lango konstruktorius - sukuria pagrindini langa ir isdelioja jo elementus
     public MainFrame() {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -63,20 +66,40 @@ public class MainFrame extends JFrame {
 
         jRadioButton2.setText("MacWilliams metodas");
 
+        // Veiksmai, atliekami nuspaudus mygtuka 'Skaiciuoti'
         jButton1.setText("Skaiciuoti");
         jButton1.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
+                    // Tikrinama ar jau nevyksta skaiciavimas
                     if (df != null && !df.isDone()) {
                         throw new Exception("Vyksta skaiciavimas");
                     }
-                    String inputMatrix = jTextArea1.getText();
-                    checkInput(inputMatrix);
+
+                    // Patikrinamas 'q' reiksmes korektiskumas
+                    checkValue(jTextField1.getText(), "q");
+
+                    // 'q' reiksme nuskaitoma ir konvertuojama is simboliu eilutes i sveika skaiciu
                     int qValue = Integer.parseInt(jTextField1.getText());
+
+                    // Patikrinama ar 'q' reiksme yra pirminis skaicius
+                    if (!isPrime(qValue)) {
+                        throw new Exception("'q' privalo buti pirminis");
+                    }
+
+                    // Nuskaitoma ivesta generuojanti matrica
+                    String inputMatrix = jTextArea1.getText();
+
+                    // Tikrinamas generuojancios matricos korektiskumas
+                    checkInputMatrix(inputMatrix);
+
+                    // Sukuriamas naujas objektas, kuris vykdys svoriu skirstinio paieska
                     df = new DistributionFinder(inputMatrix, qValue, jRadioButton1, jTextArea2);
                     df.execute();
+
+                    // Rezultatu lauke pranesama programos busena
                     jTextArea2.setText("Vyksta\nskaiciavimas...");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(MainFrame.this, ex.getMessage(),
@@ -84,11 +107,12 @@ public class MainFrame extends JFrame {
                 }
             }
 
-            private void checkInput(String inputMatrix) throws Exception {
-                checkValue(jTextField1.getText(), "q");
-                if (!isPrime(Integer.parseInt(jTextField1.getText()))) {
-                    throw new Exception("'q' privalo buti pirminis");
-                }
+            // Funkcija, tikrinanti matricos korektiskuma - matrica gali sudaryti tik desimtainiai skaitmenys, atskirti tarpais
+            // Paduodama matrica
+            // Jeigu matrica nekorektiska - randama neleistinu simboliu, tuomet metama klaida
+            // Ar matrica sudarantys skaiciai nera didesni uz 'q', matricos eiluciu ilgiai sutampa ir panasus dalykai tikrinami matricos konstruktoriuje
+            // Si funkcija tikrina tik simboliu eilutes (String) tipo matricos reprezentacija
+            private void checkInputMatrix(String inputMatrix) throws Exception {
                 Pattern pattern = Pattern.compile("[^\\d\\s]");
                 Matcher matcher = pattern.matcher(inputMatrix);
                 if (matcher.find()) {
@@ -97,6 +121,7 @@ public class MainFrame extends JFrame {
             }
         });
 
+        // Veiksmai, atliekami nuspaudus mygtuka 'Atsaukti'
         jButton3.setText("Atsaukti");
         jButton3.addActionListener(new ActionListener() {
 
@@ -173,24 +198,32 @@ public class MainFrame extends JFrame {
         jTextField3.setColumns(3);
         addTextFieldValidation(jTextField3);
 
+        // Veiksmai, atliekami nuspaudus mygtuka 'Generuoti matrica'
         jButton2.setText("Generuoti matrica");
         jButton2.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
+                    // Patikrinamas visu triju parametru 'q', 'k' ir 'n' reiksmiu korektiskumas
                     checkValue(jTextField1.getText(), "q");
                     checkValue(jTextField2.getText(), "k");
                     checkValue(jTextField3.getText(), "n");
+
+                    // Visos trys reiksmes konvertuojamos is simboliu eiluciu i sveikus skaicius
                     int qValue = Integer.parseInt(jTextField1.getText());
                     int kValue = Integer.parseInt(jTextField2.getText());
                     int nValue = Integer.parseInt(jTextField3.getText());
+
+                    // Patikrinama ar 'q' reiksme yra pirminis skaicius
                     if (!isPrime(qValue)) {
                         throw new Exception("'q' privalo buti pirminis");
+                    // Tikrinama ar matricos eiluciu skaicius nevirsija stupeliu skaiciaus
+                    // Matrica turi buti tiesiskai nepriklausoma, tai reiskia, kad eiluciu skaicius negali virsyti stulpeliu skaiciaus
                     } else if (kValue > nValue) {
                         throw new Exception("Eiluciu skaicius 'k' negali buti didesnis uz stulpeliu skaiciu 'n'");
                     } else {
-                        MatrixGenerator mg = new MatrixGenerator();
+                        // Pagal ivestus parametrus generuojama atsitiktine standartinio pavidalo matrica
                         Matrix randomMatrix = mg.generateRandomMatrix(nValue, kValue, qValue);
                         jTextArea1.setText(randomMatrix.toString());
                     }
@@ -308,6 +341,9 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    // Si funkcija sukuria tekstiniu lauku validacija
+    // I tekstinius 'q', 'k' ir 'n' laukus leidzia ivesti tik sveikuosius skaicius
+    // Si validacija negalioja generuojancios matricos ivedimo ir rezultatu laukams
     private void addTextFieldValidation(JTextField field) {
         field.addKeyListener(new KeyAdapter() {
 
@@ -323,6 +359,8 @@ public class MainFrame extends JFrame {
         });
     }
 
+    // Tikrina ar skaicius yra pirminis
+    // Paduodamas sveikas skaicius, grzinama logine reiksme 'true' arba 'false'
     private boolean isPrime(int num) {
         if (num < 2) {
             return false;
@@ -335,6 +373,10 @@ public class MainFrame extends JFrame {
         return true;
    }
 
+    // Tikrina ivesta reiksme - ar ji apskritai buvo ivesta, ar ji nelygi 0,
+    // bei ar nekyla problemu ja konvertuojant is simboliu eilute (String) reprezentacijos i sveika skaiciu
+    // Paduodama tikrinama simboliu eilutes reiksme bei lauko pavadinimas, kuris taip pat yra simboliu eilute
+    // Lauko pavadinimas reikalingas tam, kad klaidos pranesime pranesti, kuriame lauke yra netinkama reiksme
     private void checkValue(String value, String field) throws Exception {
         if (value.equals("")) {
             throw new Exception("'" + field + "' negali buti tuscias");
@@ -344,7 +386,7 @@ public class MainFrame extends JFrame {
         try {
             intValue = Integer.parseInt(value);
         } catch (Exception ex) {
-            throw new Exception("'" + field + "' virsija maksimalia reiksme");
+            throw new Exception("'" + field + "' lauke netinkama reiksme");
         }
 
         if (intValue == 0) {

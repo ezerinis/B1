@@ -11,14 +11,14 @@ public class VectorOperations {
             throw new Exception("Negalima sudauginti, kai matricos eiluciu skaicius ir vektoriaus ilgis nesutampa");
         }
 
-        // Is pradziu matricos eilutes-vektoriai sudauginami su vektoriaus atitinkamomis koordinatemis moduliu 'q'
+        // Is pradziu matricos eilutes sudauginamos su vektoriaus atitinkamomis koordinatemis moduliu 'q'
         Matrix multipliedMatrix = new Matrix(matrix.getRowCount());
         for (int i = 0; i < vector.getSize(); i++) {
             Vector multipliedVector = multiply(vector.getC(i), matrix.getVector(i), q);
             multipliedMatrix.setVector(i, multipliedVector);
         }
 
-        // Sudaugintos matricos eilutes-vektoriai sudedami vieni su kitais modulu 'q'
+        // Sudaugintos matricos eilutes sudedamos vienos su kitomis modulu 'q'
         Vector result = new Vector(matrix.getColumnCount());
         for (int i = 0; i < multipliedMatrix.getRowCount(); i++) {
             result = add(result, multipliedMatrix.getVector(i), q);
@@ -60,6 +60,7 @@ public class VectorOperations {
     }
 
     // Skaliarine dvieju vektoriu sandauga
+    // Paduodami du vektoriai ir modulis 'q', grazinamas vektorius
     public int scalarMultiply(Vector vector1, Vector vector2, int q) throws Exception {
         if (vector1.getSize() != vector2.getSize()) {
             throw new Exception("Negalima skaliariskai sudauginti vektoriu, kuriu ilgiai nesutampa");
@@ -78,6 +79,9 @@ public class VectorOperations {
         for (int i = 0; i < vector.getSize(); i++) {
             int value = (vector.getC(i) + 1) % q;
             vector.setC(i, value);
+
+            // Jeigu vektoriaus koordinate, padidinus ja vienetu, netampa lygi nuliui, grazinamas gautas vektorius
+            // Priesingu atveju veiksmai vykdomi toliau ir vienetu didinama jau sekanti vektoriaus koordinate
             if (value != 0) {
                 return;
             }

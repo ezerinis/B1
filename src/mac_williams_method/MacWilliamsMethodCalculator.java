@@ -1,3 +1,5 @@
+// Si klase skaiciuoja kodo zodziu svoriu skirstini pritaikant MacWilliams tapatybe
+
 package mac_williams_method;
 
 public class MacWilliamsMethodCalculator {
@@ -18,10 +20,10 @@ public class MacWilliamsMethodCalculator {
             codeSize += weight;
         }
 
-        // x + (q - 1) * y
+        // Pirmasis funkcijos parametras: x + (q - 1) * y
         Polynomial poly1 = new Polynomial(new Term[]{new Term(X, 0), new Term(q - 1, 1)});
 
-        // x - y
+        // Antrasis funkcijos parametras: x - y
         Polynomial poly2 = new Polynomial(new Term[]{new Term(X, 0), new Term(-1, 1)});
 
         // Generuojami visi 'Ai * x^(n-i) * y^i', pakeliami laipsniu ir sudauginami
@@ -32,7 +34,7 @@ public class MacWilliamsMethodCalculator {
             polyParts[i] = po.mul(temp, dualWeightDistribution[i]);
         }
 
-        // Pries tai gautos polinomo dalys sudedamos
+        // Anksciau gautos polinomo dalys sudedamos
         Polynomial fullPoly = polyParts[0];
         for (int i = 1; i < polyParts.length; i++) {
             fullPoly = po.add(fullPoly, polyParts[i]);

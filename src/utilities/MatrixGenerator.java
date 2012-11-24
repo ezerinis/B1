@@ -24,7 +24,7 @@ public class MatrixGenerator {
     }
 
     // Sukuria standartinio pavidalo vienetine matrica
-    // Paduodamas eiluciu ir stulpeliu skaicius, grzinama matrica, kurios pagrindineje istrizaineje vienetai, siur kitur nuliai
+    // Paduodamas eiluciu ir stulpeliu skaicius, grazinama matrica, kurios pagrindineje istrizaineje vienetai, visur kitur nuliai
     public Matrix generateUnitaryMatrix(int rows, int columns) {
         Matrix unitaryMatrix = new Matrix(rows);
         for (int i = 0; i < rows; i++) {

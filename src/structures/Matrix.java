@@ -2,10 +2,11 @@ package structures;
 
 public class Matrix {
 
+    // Visa informacija laikoma vektoriu masyve
+    // Matricos eilutes sudaro vektoriai
     private Vector[] data;
 
-    // Matricos sukurimas, paduodant lentele ir moduli 'q'
-    // Matricos eilutes sudaro vektoriai
+    // Matricos sukurimas paduodant sveiku skaiciu lentele ir moduli 'q'
     public Matrix(int[][] input, int q) throws Exception {
         if (input == null || input.length == 0) {
             throw new Exception("Matrica negali buti tuscia");
@@ -54,18 +55,23 @@ public class Matrix {
         data = new Vector[rowCount];
     }
 
+    // Pakeicia matricos eilute i nauja
+    // I nurodyta pozicija istato paduota vektoriu
     public void setVector(int num, Vector vector) {
         data[num] = vector;
     }
 
+    // Grazina nurodyta matricos eilute
     public Vector getVector(int num) {
         return data[num].clone();
     }
 
+    // Grazina matricos eiluciu skaiciu
     public int getRowCount() {
         return data.length;
     }
 
+    // Grazina matricos stulpeliu skaiciu
     public int getColumnCount() {
         if (data.length != 0 && data[0] != null) {
             return data[0].getSize();
@@ -74,6 +80,17 @@ public class Matrix {
         }
     }
 
+    // Perstata - perstato matricos stulpelius
+    // Paduodami stulpeliu numeriai, matricos, kuriai iskvieciama si funkcija, stulpeliai perstatomi
+    public void rearrange(int i, int j) {
+        for (Vector vector : data) {
+            int temp = vector.getC(i);
+            vector.setC(i, vector.getC(j));
+            vector.setC(j, temp);
+        }
+    }
+
+    // Klonuoja matrica - grazina sios matricos kopija
     @Override
     public Matrix clone() {
         Matrix clonedMatrix = new Matrix(data.length);
@@ -83,6 +100,7 @@ public class Matrix {
         return clonedMatrix;
     }
 
+    // Grazina lentele (masyvu masyva) su matricos duomenimis
     public int[][] toArray() {
         int[][] array = new int[data.length][data[0].getSize()];
         for (int k = 0; k < data.length; k++) {
@@ -92,6 +110,7 @@ public class Matrix {
         return array;
     }
 
+    // Grazina matricos simbliu eilutes (String) reprezentacija
     @Override
     public String toString() {
         String result = "";
@@ -100,25 +119,5 @@ public class Matrix {
 
         }
         return result;
-    }
-
-    public void print() {
-        for (int k = 0; k < data.length; k++) {
-            Vector row = data[k];
-            for (int n = 0; n < row.getSize(); n++) {
-                System.out.print(row.getC(n));
-            }
-            System.out.println();
-        }
-    }
-
-    // Perstata - perstato matricos stulpelius
-    // Paduodami stulpeliu numeriai, matricos, kuriai iskviecima si funkcija, stulpeliai perstatomi
-    public void rearrange(int i, int j) {
-        for (Vector vector : data) {
-            int temp = vector.getC(i);
-            vector.setC(i, vector.getC(j));
-            vector.setC(j, temp);
-        }
     }
 }

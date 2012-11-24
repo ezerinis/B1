@@ -1,6 +1,5 @@
 import direct_method.Direct_methodSuite;
 import mac_williams_method.Mac_williams_methodSuite;
-import main.MainSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,7 +10,7 @@ import structures.StructuresSuite;
 import utilities.UtilitiesSuite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({Direct_methodSuite.class, MainSuite.class, UtilitiesSuite.class, Mac_williams_methodSuite.class, StructuresSuite.class})
+@Suite.SuiteClasses({Direct_methodSuite.class, UtilitiesSuite.class, Mac_williams_methodSuite.class, StructuresSuite.class})
 public class RootSuite {
 
     @BeforeClass

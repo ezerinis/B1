@@ -17,18 +17,22 @@ public class Term {
         return new Term(this.cof, this.pow);
     }
 
+    // Grazinamas termo koeficientas
     public int getCof() {
         return cof;
     }
 
+    // Grazinamas termo laipsnis
     public int getPow() {
         return pow;
     }
 
+    // Termo koeficientas pakeiciamas i nauja, kuris paduodamas kaip parametras
     public void setCof(int cof) {
         this.cof = cof;
     }
 
+    // Termo laipsnis pakeiciamas i nauja, kuris paduodamas kaip parametras
     public void setPow(int pow) {
         this.pow = pow;
     }

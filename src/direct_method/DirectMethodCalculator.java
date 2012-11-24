@@ -1,10 +1,11 @@
+// Si klase skaiciuoja kodo zodziu svoriu skirstini tiesioginio perrinkimo budu
+
 package direct_method;
 
 import structures.Vector;
 
 public class DirectMethodCalculator {
 
-    // Apskaiciuoja svoriu skirstini tiesioginio perrinkimo budu
     // Paduodamas tiesinis abeceles kodas - vektoriu masyvas, grazinamas svoriu skirstinys
     public int[] calculateDistribution(Vector[] code) throws Exception {
         if (code.length == 0) {
@@ -20,7 +21,7 @@ public class DirectMethodCalculator {
     }
 
     // Apskaiciuoja vieno zodzio svori
-    // Paduodamas kodo zodis - vektorius, grazinamas svoris - sveikas skaicius
+    // Paduodamas kodo zodis, grazinamas nenuliniu jo koordinaciu skaicius
     private int calculateWeight(Vector word) {
         int weight = 0;
         for (int i = 0; i < word.getSize(); i++) {
